@@ -1,0 +1,106 @@
+{
+  "texas": {
+    "state_name": "Texas",
+    "abbreviation": "TX",
+    "cities": [
+      {
+        "name": "Houston",
+        "county": "Harris County",
+        "population": 2304580,
+        "latitude": 29.7604,
+        "longitude": -95.3698,
+        "note": "Houston has NO traditional zoning. Uses deed restrictions + land use ordinances. Special case."
+      },
+      {
+        "name": "San Antonio",
+        "county": "Bexar County",
+        "population": 1451853,
+        "latitude": 29.4241,
+        "longitude": -98.4936,
+        "municode_id": "san-antonio",
+        "zoning_title": "35",
+        "zoning_article": "Unified Development Code"
+      },
+      {
+        "name": "Dallas",
+        "county": "Dallas County",
+        "population": 1304379,
+        "latitude": 32.7767,
+        "longitude": -96.7970,
+        "municode_id": "dallas",
+        "zoning_title": "51A",
+        "zoning_article": "Dallas Development Code"
+      },
+      {
+        "name": "Fort Worth",
+        "county": "Tarrant County",
+        "population": 958692,
+        "latitude": 32.7555,
+        "longitude": -97.3308,
+        "municode_id": "fort-worth",
+        "zoning_title": "4",
+        "zoning_article": "Zoning"
+      },
+      {
+        "name": "El Paso",
+        "county": "El Paso County",
+        "population": 681124,
+        "latitude": 31.7619,
+        "longitude": -106.4850,
+        "municode_id": "el-paso",
+        "zoning_title": "20",
+        "zoning_article": "Zoning"
+      },
+      {
+        "name": "Arlington",
+        "county": "Tarrant County",
+        "population": 394266,
+        "latitude": 32.7357,
+        "longitude": -97.1081,
+        "municode_id": "arlington",
+        "zoning_title": "3",
+        "zoning_article": "Land Use Regulations"
+      },
+      {
+        "name": "Corpus Christi",
+        "county": "Nueces County",
+        "population": 317863,
+        "latitude": 27.8006,
+        "longitude": -97.3964,
+        "municode_id": "corpus-christi",
+        "zoning_title": "4",
+        "zoning_article": "Unified Development Code"
+      },
+      {
+        "name": "Plano",
+        "county": "Collin County",
+        "population": 285494,
+        "latitude": 33.0198,
+        "longitude": -96.6989,
+        "municode_id": "plano",
+        "zoning_title": "9",
+        "zoning_article": "Zoning"
+      },
+      {
+        "name": "Lubbock",
+        "county": "Lubbock County",
+        "population": 263930,
+        "latitude": 33.5779,
+        "longitude": -101.8552,
+        "municode_id": "lubbock",
+        "zoning_title": "40",
+        "zoning_article": "Zoning"
+      },
+      {
+        "name": "Laredo",
+        "county": "Webb County",
+        "population": 255205,
+        "latitude": 27.5036,
+        "longitude": -99.5076,
+        "municode_id": "laredo",
+        "zoning_title": "24",
+        "zoning_article": "Zoning"
+      }
+    ]
+  }
+}
