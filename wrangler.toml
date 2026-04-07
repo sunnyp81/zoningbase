@@ -5,4 +5,4 @@ pages_build_output_dir = "./dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "zoningbase-prod"
-database_id = "placeholder"
+database_id = "90c59268-dd2d-4074-af1a-ecdab443d79c"
