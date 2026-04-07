@@ -1,0 +1,89 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { getDB } from '../../../lib/db';
+
+const { state: stateSlug, county: countySlug } = Astro.params;
+const db = getDB(Astro.locals);
+
+const county = await db
+  .prepare(
+    `SELECT c.id, c.name, c.slug, s.name as state_name, s.slug as state_slug, s.abbreviation
+     FROM counties c
+     JOIN states s ON c.state_id = s.id
+     WHERE c.slug = ? AND s.slug = ?`
+  )
+  .bind(countySlug, stateSlug)
+  .first<{ id: number; name: string; slug: string; state_name: string; state_slug: string; abbreviation: string }>();
+
+if (!county) {
+  Astro.response.status = 404;
+  Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, max-age=60');
+}
+
+const cities = county
+  ? await db
+      .prepare(
+        `SELECT ci.name, ci.slug, ci.population,
+                COUNT(z.id) as zone_count
+         FROM cities ci
+         LEFT JOIN zones z ON z.city_id = ci.id
+         WHERE ci.county_id = ?
+         GROUP BY ci.id
+         ORDER BY ci.name`
+      )
+      .bind(county.id)
+      .all<{ name: string; slug: string; population: number | null; zone_count: number }>()
+  : null;
+
+const title = county
+  ? `${county.name}, ${county.abbreviation} Zoning Codes | ZoningBase`
+  : 'County Not Found | ZoningBase';
+const description = county
+  ? `Explore zoning codes for ${cities?.results.length ?? 0} cities in ${county.name}, ${county.state_name}. Development standards and permitted uses.`
+  : '';
+---
+
+<Base title={title} description={description}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {county ? (
+      <>
+        <Breadcrumbs crumbs={[
+          { label: 'Home', href: '/' },
+          { label: county.state_name, href: `/${county.state_slug}/` },
+          { label: county.name },
+        ]} />
+
+        <div class="mt-6">
+          <h1 class="text-3xl sm:text-4xl font-bold">{county.name}</h1>
+          <p class="mt-2 text-text-secondary">
+            Zoning codes for {cities!.results.length} {cities!.results.length === 1 ? 'city' : 'cities'} in {county.name}, {county.state_name}.
+          </p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {cities!.results.map((city) => (
+            <a
+              href={`/${county.state_slug}/${county.slug}/${city.slug}/`}
+              class="bg-surface rounded-xl border border-border hover:border-brand-400 hover:shadow-sm p-5 transition-all"
+            >
+              <h2 class="font-semibold text-lg">{city.name}</h2>
+              <div class="flex gap-4 mt-1 text-sm text-text-muted">
+                {city.population && (
+                  <span>Pop. {city.population.toLocaleString()}</span>
+                )}
+                <span>{city.zone_count} {city.zone_count === 1 ? 'zone' : 'zones'}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ) : (
+      <div class="py-20 text-center">
+        <h1 class="text-2xl font-bold">County Not Found</h1>
+        <p class="mt-2 text-text-secondary">We don't have zoning data for this county yet.</p>
+        <a href={`/${stateSlug}/`} class="mt-4 inline-block text-brand-600 hover:text-brand-700 font-medium">Back to state</a>
+      </div>
+    )}
+  </div>
+</Base>

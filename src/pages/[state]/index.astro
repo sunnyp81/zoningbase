@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getDB } from '../../lib/db';
+
+const { state: stateSlug } = Astro.params;
+const db = getDB(Astro.locals);
+
+const state = await db
+  .prepare('SELECT id, name, slug, abbreviation FROM states WHERE slug = ?')
+  .bind(stateSlug)
+  .first<{ id: number; name: string; slug: string; abbreviation: string }>();
+
+if (!state) {
+  Astro.response.status = 404;
+  Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, max-age=60');
+}
+
+const counties = state
+  ? await db
+      .prepare(
+        `SELECT c.name, c.slug, COUNT(ci.id) as city_count
+         FROM counties c
+         LEFT JOIN cities ci ON ci.county_id = c.id
+         WHERE c.state_id = ?
+         GROUP BY c.id
+         ORDER BY c.name`
+      )
+      .bind(state.id)
+      .all<{ name: string; slug: string; city_count: number }>()
+  : null;
+
+const title = state
+  ? `${state.name} Zoning Codes by County | ZoningBase`
+  : 'State Not Found | ZoningBase';
+const description = state
+  ? `Browse zoning codes across ${counties?.results.length ?? 0} counties in ${state.name}. Development standards, permitted uses, and setback requirements.`
+  : '';
+---
+
+<Base title={title} description={description}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {state ? (
+      <>
+        <Breadcrumbs crumbs={[
+          { label: 'Home', href: '/' },
+          { label: state.name },
+        ]} />
+
+        <div class="mt-6">
+          <h1 class="text-3xl sm:text-4xl font-bold">{state.name} Zoning Codes</h1>
+          <p class="mt-2 text-text-secondary">
+            Browse zoning regulations across {counties!.results.length} {counties!.results.length === 1 ? 'county' : 'counties'} in {state.name}.
+          </p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {counties!.results.map((county) => (
+            <a
+              href={`/${state.slug}/${county.slug}/`}
+              class="bg-surface rounded-xl border border-border hover:border-brand-400 hover:shadow-sm p-5 transition-all"
+            >
+              <h2 class="font-semibold text-lg">{county.name}</h2>
+              <p class="text-sm text-text-muted mt-1">
+                {county.city_count} {county.city_count === 1 ? 'city' : 'cities'}
+              </p>
+            </a>
+          ))}
+        </div>
+      </>
+    ) : (
+      <div class="py-20 text-center">
+        <h1 class="text-2xl font-bold">State Not Found</h1>
+        <p class="mt-2 text-text-secondary">We don't have zoning data for this state yet.</p>
+        <a href="/" class="mt-4 inline-block text-brand-600 hover:text-brand-700 font-medium">Back to all states</a>
+      </div>
+    )}
+  </div>
+</Base>

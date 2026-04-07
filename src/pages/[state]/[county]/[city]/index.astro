@@ -1,0 +1,134 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
+import { getDB } from '../../../../lib/db';
+
+const { state: stateSlug, county: countySlug, city: citySlug } = Astro.params;
+const db = getDB(Astro.locals);
+
+// Single JOIN to get city + county + state
+const city = await db
+  .prepare(
+    `SELECT ci.id, ci.name, ci.slug, ci.latitude, ci.longitude, ci.population,
+            co.name as county_name, co.slug as county_slug,
+            s.name as state_name, s.slug as state_slug, s.abbreviation
+     FROM cities ci
+     JOIN counties co ON ci.county_id = co.id
+     JOIN states s ON co.state_id = s.id
+     WHERE ci.slug = ? AND co.slug = ? AND s.slug = ?`
+  )
+  .bind(citySlug, countySlug, stateSlug)
+  .first<{
+    id: number; name: string; slug: string;
+    latitude: number | null; longitude: number | null; population: number | null;
+    county_name: string; county_slug: string;
+    state_name: string; state_slug: string; abbreviation: string;
+  }>();
+
+if (!city) {
+  Astro.response.status = 404;
+  Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, max-age=60');
+}
+
+// Get zones for this city
+const zones = city
+  ? await db
+      .prepare(
+        `SELECT id, zone_code, zone_code_slug, zone_name, description,
+                max_height_ft, far, min_lot_size_sqft
+         FROM zones WHERE city_id = ? ORDER BY zone_code`
+      )
+      .bind(city.id)
+      .all<{
+        id: number; zone_code: string; zone_code_slug: string; zone_name: string;
+        description: string | null; max_height_ft: number | null; far: number | null;
+        min_lot_size_sqft: number | null;
+      }>()
+  : null;
+
+// Batch fetch permitted use counts per zone (avoids N+1)
+let useCountMap = new Map<number, number>();
+if (zones?.results.length) {
+  const zoneIds = zones.results.map(z => z.id);
+  const placeholders = zoneIds.map(() => '?').join(',');
+  const useCounts = await db
+    .prepare(
+      `SELECT zone_id, COUNT(*) as cnt FROM zone_permitted_uses
+       WHERE zone_id IN (${placeholders}) GROUP BY zone_id`
+    )
+    .bind(...zoneIds)
+    .all<{ zone_id: number; cnt: number }>();
+  for (const row of useCounts.results) {
+    useCountMap.set(row.zone_id, row.cnt);
+  }
+}
+
+const title = city
+  ? `${city.name}, ${city.abbreviation} Zoning Codes | ZoningBase`
+  : 'City Not Found | ZoningBase';
+const description = city
+  ? `All ${zones?.results.length ?? 0} zoning districts in ${city.name}, ${city.state_name}. Development standards, height limits, FAR, setbacks, and permitted uses.`
+  : '';
+---
+
+<Base title={title} description={description}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {city ? (
+      <>
+        <Breadcrumbs crumbs={[
+          { label: 'Home', href: '/' },
+          { label: city.state_name, href: `/${city.state_slug}/` },
+          { label: city.county_name, href: `/${city.state_slug}/${city.county_slug}/` },
+          { label: city.name },
+        ]} />
+
+        <div class="mt-6">
+          <h1 class="text-3xl sm:text-4xl font-bold">{city.name}, {city.abbreviation}</h1>
+          <p class="mt-2 text-text-secondary">
+            {zones!.results.length} zoning {zones!.results.length === 1 ? 'district' : 'districts'}
+            {city.population && <> &middot; Population {city.population.toLocaleString()}</>}
+          </p>
+        </div>
+
+        <div class="mt-8 space-y-4">
+          {zones!.results.map((zone) => (
+            <a
+              href={`/${city.state_slug}/${city.county_slug}/${city.slug}/zoning/${zone.zone_code_slug}/`}
+              class="block bg-surface rounded-xl border border-border hover:border-brand-400 hover:shadow-sm p-5 transition-all"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-md bg-brand-100 text-brand-800 font-mono font-semibold text-sm w-fit">
+                  {zone.zone_code}
+                </span>
+                <h2 class="font-semibold text-lg">{zone.zone_name}</h2>
+              </div>
+              {zone.description && (
+                <p class="mt-2 text-sm text-text-secondary line-clamp-2">{zone.description}</p>
+              )}
+              <div class="mt-3 flex flex-wrap gap-4 text-xs text-text-muted">
+                {zone.max_height_ft != null && (
+                  <span>Height: {zone.max_height_ft} ft</span>
+                )}
+                {zone.far != null && (
+                  <span>FAR: {zone.far}</span>
+                )}
+                {zone.min_lot_size_sqft != null && (
+                  <span>Min Lot: {zone.min_lot_size_sqft.toLocaleString()} sqft</span>
+                )}
+                {useCountMap.get(zone.id) && (
+                  <span>{useCountMap.get(zone.id)} permitted uses</span>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </>
+    ) : (
+      <div class="py-20 text-center">
+        <h1 class="text-2xl font-bold">City Not Found</h1>
+        <p class="mt-2 text-text-secondary">We don't have zoning data for this city yet.</p>
+        <a href={`/${stateSlug}/${countySlug}/`} class="mt-4 inline-block text-brand-600 hover:text-brand-700 font-medium">Back to county</a>
+      </div>
+    )}
+  </div>
+</Base>

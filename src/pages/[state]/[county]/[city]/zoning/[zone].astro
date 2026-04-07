@@ -1,0 +1,452 @@
+---
+import Base from '../../../../../layouts/Base.astro';
+import Breadcrumbs from '../../../../../components/Breadcrumbs.astro';
+import { getDB } from '../../../../../lib/db';
+
+const { state: stateSlug, county: countySlug, city: citySlug, zone: zoneSlug } = Astro.params;
+const db = getDB(Astro.locals);
+
+// Full hierarchy lookup in one JOIN
+const zone = await db
+  .prepare(
+    `SELECT z.*, ci.name as city_name, ci.slug as city_slug,
+            ci.latitude, ci.longitude, ci.population,
+            co.name as county_name, co.slug as county_slug,
+            s.name as state_name, s.slug as state_slug, s.abbreviation
+     FROM zones z
+     JOIN cities ci ON z.city_id = ci.id
+     JOIN counties co ON ci.county_id = co.id
+     JOIN states s ON co.state_id = s.id
+     WHERE z.zone_code_slug = ? AND ci.slug = ? AND co.slug = ? AND s.slug = ?`
+  )
+  .bind(zoneSlug, citySlug, countySlug, stateSlug)
+  .first<{
+    id: number; zone_code: string; zone_code_slug: string; zone_name: string;
+    description: string | null;
+    max_height_ft: number | null; far: number | null;
+    min_lot_size_sqft: number | null; max_impervious_cover_pct: number | null;
+    setback_front_ft: number | null; setback_rear_ft: number | null; setback_side_ft: number | null;
+    parking_requirement: string | null;
+    city_name: string; city_slug: string;
+    latitude: number | null; longitude: number | null; population: number | null;
+    county_name: string; county_slug: string;
+    state_name: string; state_slug: string; abbreviation: string;
+  }>();
+
+if (!zone) {
+  Astro.response.status = 404;
+  Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, max-age=60');
+}
+
+// Permitted uses for this zone
+const permittedUses = zone
+  ? await db
+      .prepare(
+        `SELECT pu.name, pu.category
+         FROM zone_permitted_uses zpu
+         JOIN permitted_uses pu ON zpu.permitted_use_id = pu.id
+         WHERE zpu.zone_id = ?
+         ORDER BY pu.category, pu.name`
+      )
+      .bind(zone.id)
+      .all<{ name: string; category: string }>()
+  : null;
+
+// Group uses by category
+const usesByCategory = new Map<string, string[]>();
+if (permittedUses?.results) {
+  for (const use of permittedUses.results) {
+    if (!usesByCategory.has(use.category)) {
+      usesByCategory.set(use.category, []);
+    }
+    usesByCategory.get(use.category)!.push(use.name);
+  }
+}
+
+// Development standards — only include non-null values
+const standards: { label: string; value: string; icon: string }[] = [];
+if (zone) {
+  if (zone.max_height_ft != null) standards.push({ label: 'Max Building Height', value: `${zone.max_height_ft} ft`, icon: 'height' });
+  if (zone.far != null) standards.push({ label: 'Floor Area Ratio', value: zone.far.toString(), icon: 'far' });
+  if (zone.min_lot_size_sqft != null) standards.push({ label: 'Minimum Lot Size', value: `${zone.min_lot_size_sqft.toLocaleString()} sqft`, icon: 'lot' });
+  if (zone.max_impervious_cover_pct != null) standards.push({ label: 'Max Impervious Cover', value: `${zone.max_impervious_cover_pct}%`, icon: 'cover' });
+  if (zone.setback_front_ft != null) standards.push({ label: 'Front Setback', value: `${zone.setback_front_ft} ft`, icon: 'setback' });
+  if (zone.setback_rear_ft != null) standards.push({ label: 'Rear Setback', value: `${zone.setback_rear_ft} ft`, icon: 'setback' });
+  if (zone.setback_side_ft != null) standards.push({ label: 'Side Setback', value: `${zone.setback_side_ft} ft`, icon: 'setback' });
+}
+
+const hasMap = zone?.latitude != null && zone?.longitude != null;
+
+const title = zone
+  ? `${zone.city_name} ${zone.zone_code} Zoning Code & Permitted Uses | ZoningBase`
+  : 'Zone Not Found | ZoningBase';
+const description = zone
+  ? `${zone.zone_name} (${zone.zone_code}) in ${zone.city_name}, ${zone.state_name}. Height limit ${zone.max_height_ft ?? 'N/A'} ft, FAR ${zone.far ?? 'N/A'}, ${permittedUses?.results.length ?? 0} permitted uses.`
+  : '';
+
+// JSON-LD structured data
+const jsonLd = zone ? {
+  '@context': 'https://schema.org',
+  '@type': 'GovernmentService',
+  name: `${zone.zone_code} — ${zone.zone_name}`,
+  description: zone.description ?? description,
+  serviceType: 'Zoning Regulation',
+  areaServed: {
+    '@type': 'City',
+    name: zone.city_name,
+    containedInPlace: {
+      '@type': 'State',
+      name: zone.state_name,
+    },
+    ...(zone.latitude && zone.longitude ? {
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: zone.latitude,
+        longitude: zone.longitude,
+      },
+    } : {}),
+  },
+  provider: {
+    '@type': 'GovernmentOrganization',
+    name: `City of ${zone.city_name}`,
+  },
+} : null;
+
+const categories = [...usesByCategory.keys()];
+---
+
+<Base title={title} description={description} ogType="article">
+  {zone && (
+    <Fragment slot="head">
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      {hasMap && (
+        <>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+                integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+                crossorigin="" />
+          <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                  crossorigin=""></script>
+        </>
+      )}
+    </Fragment>
+  )}
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {zone ? (
+      <>
+        <Breadcrumbs crumbs={[
+          { label: 'Home', href: '/' },
+          { label: zone.state_name, href: `/${zone.state_slug}/` },
+          { label: zone.county_name, href: `/${zone.state_slug}/${zone.county_slug}/` },
+          { label: zone.city_name, href: `/${zone.state_slug}/${zone.county_slug}/${zone.city_slug}/` },
+          { label: zone.zone_code },
+        ]} />
+
+        <!-- Header -->
+        <div class="mt-6 pb-6 border-b border-border">
+          <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="shrink-0">
+              <span class="inline-flex items-center justify-center w-20 h-20 rounded-xl bg-brand-950 text-brand-300 font-mono font-bold text-2xl">
+                {zone.zone_code}
+              </span>
+            </div>
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-bold leading-tight">{zone.zone_name}</h1>
+              <p class="mt-1 text-text-secondary text-lg">{zone.city_name}, {zone.county_name}, {zone.state_name}</p>
+              {zone.description && (
+                <p class="mt-3 text-text-secondary leading-relaxed max-w-3xl">{zone.description}</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Bar -->
+        {standards.length > 0 && (
+          <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {standards.slice(0, 4).map((std) => (
+              <div class="bg-surface rounded-lg border border-border p-4 text-center">
+                <p class="text-2xl font-bold text-brand-700">{std.value}</p>
+                <p class="text-xs text-text-muted mt-1 uppercase tracking-wider">{std.label}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <!-- Development Standards + Map Grid -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <!-- Development Standards Card — 3 cols -->
+          <div class="lg:col-span-3 bg-surface rounded-xl border border-border overflow-hidden">
+            <div class="px-5 py-4 border-b border-border bg-surface-alt">
+              <h2 class="font-semibold text-lg flex items-center gap-2">
+                <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>
+                Development Standards
+              </h2>
+            </div>
+            {standards.length > 0 ? (
+              <table class="w-full">
+                <tbody>
+                  {standards.map((std, i) => (
+                    <tr class={i % 2 === 0 ? 'bg-surface' : 'bg-surface-alt'}>
+                      <td class="px-5 py-3.5 text-sm text-text-secondary">{std.label}</td>
+                      <td class="px-5 py-3.5 text-sm font-semibold text-right tabular-nums">{std.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div class="px-5 py-8 text-center text-text-muted text-sm">
+                No development standards data available.
+              </div>
+            )}
+            {zone.parking_requirement && (
+              <div class="px-5 py-4 border-t border-border bg-surface-alt">
+                <div class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-text-muted mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H18.75M3.375 14.25h.008v.008h-.008v-.008zm0 0h14.625M3.375 14.25l1.827-6.09a1.125 1.125 0 011.084-.835h10.428c.497 0 .936.327 1.084.835l1.827 6.09" />
+                  </svg>
+                  <div>
+                    <p class="text-xs text-text-muted uppercase tracking-wider font-semibold">Parking</p>
+                    <p class="text-sm text-text-secondary mt-0.5">{zone.parking_requirement}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Map — 2 cols -->
+          <div class="lg:col-span-2 bg-surface rounded-xl border border-border overflow-hidden">
+            <div class="px-5 py-4 border-b border-border bg-surface-alt">
+              <h2 class="font-semibold text-lg flex items-center gap-2">
+                <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                {zone.city_name} Location
+              </h2>
+            </div>
+            {hasMap ? (
+              <div id="map" class="h-72 lg:h-[calc(100%-3.5rem)]" style="min-height: 300px;"
+                   data-lat={zone.latitude}
+                   data-lng={zone.longitude}
+                   data-city={zone.city_name}
+                   data-zone={zone.zone_code}></div>
+            ) : (
+              <div class="h-72 lg:h-[calc(100%-3.5rem)] bg-slate-50 flex items-center justify-center text-text-muted text-sm" style="min-height: 300px;">
+                <p>Coordinates not available for this location.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Permitted Uses with Search -->
+        <div class="mt-8 bg-surface rounded-xl border border-border overflow-hidden">
+          <div class="px-5 py-4 border-b border-border bg-surface-alt flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h2 class="font-semibold text-lg flex items-center gap-2">
+                <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                </svg>
+                Permitted Uses
+              </h2>
+              <p class="text-sm text-text-muted mt-0.5">{permittedUses?.results.length ?? 0} uses permitted in {zone.zone_code}</p>
+            </div>
+            {(permittedUses?.results.length ?? 0) > 5 && (
+              <div class="relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                <input
+                  id="use-search"
+                  type="text"
+                  placeholder="Filter uses..."
+                  class="pl-9 pr-4 py-2 text-sm rounded-lg border border-border bg-surface focus:outline-none focus:border-brand-400 w-full sm:w-56"
+                />
+              </div>
+            )}
+          </div>
+
+          {usesByCategory.size > 0 ? (
+            <div id="uses-container">
+              <!-- Category filter tabs -->
+              {categories.length > 1 && (
+                <div class="px-5 pt-4 flex flex-wrap gap-2" id="category-tabs">
+                  <button data-category="all" class="cat-tab px-3 py-1.5 text-xs font-medium rounded-full border transition-colors bg-brand-600 text-white border-brand-600">
+                    All ({permittedUses!.results.length})
+                  </button>
+                  {categories.map((cat) => (
+                    <button data-category={cat} class="cat-tab px-3 py-1.5 text-xs font-medium rounded-full border transition-colors bg-surface text-text-secondary border-border hover:border-brand-400">
+                      {cat} ({usesByCategory.get(cat)!.length})
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <!-- Uses table -->
+              <div class="p-5">
+                <table class="w-full" id="uses-table">
+                  <thead>
+                    <tr class="border-b border-border">
+                      <th class="text-left text-xs font-semibold uppercase tracking-wider text-text-muted pb-2 pl-3">Use</th>
+                      <th class="text-left text-xs font-semibold uppercase tracking-wider text-text-muted pb-2">Category</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {permittedUses!.results.map((use, i) => (
+                      <tr class={`use-row border-b border-border-light last:border-0 ${i % 2 === 0 ? '' : 'bg-surface-alt'}`} data-category={use.category} data-name={use.name.toLowerCase()}>
+                        <td class="py-2.5 pl-3 text-sm">{use.name}</td>
+                        <td class="py-2.5 text-sm">
+                          <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            use.category === 'Residential' ? 'bg-green-50 text-green-700 border border-green-200' :
+                            use.category === 'Commercial' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                            use.category === 'Civic' ? 'bg-purple-50 text-purple-700 border border-purple-200' :
+                            use.category === 'Industrial' ? 'bg-orange-50 text-orange-700 border border-orange-200' :
+                            'bg-gray-50 text-gray-700 border border-gray-200'
+                          }`}>
+                            {use.category}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p id="no-results" class="hidden py-6 text-center text-text-muted text-sm">
+                  No permitted uses match your search.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div class="px-5 py-8 text-center text-text-muted text-sm">
+              No permitted use data available for this zone.
+            </div>
+          )}
+        </div>
+
+        <!-- Lead Capture CTA -->
+        <div class="mt-8 relative overflow-hidden rounded-xl">
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-950 to-brand-800"></div>
+          <div class="relative p-8 sm:p-10">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+              <div class="lg:max-w-xl">
+                <h2 class="text-2xl font-bold text-white">Need a Zoning Variance in {zone.city_name}?</h2>
+                <p class="mt-2 text-brand-200 leading-relaxed">
+                  Navigating {zone.zone_code} requirements? Connect with a local land use attorney who understands {zone.city_name}'s zoning code to discuss your parcel and development plans.
+                </p>
+              </div>
+              <form class="grid grid-cols-1 gap-3 w-full lg:w-80 shrink-0" id="lead-form">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  class="px-4 py-3 rounded-lg bg-white/10 backdrop-blur border border-white/20 text-white placeholder-brand-300 text-sm focus:outline-none focus:border-brand-300 focus:ring-1 focus:ring-brand-300"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                  class="px-4 py-3 rounded-lg bg-white/10 backdrop-blur border border-white/20 text-white placeholder-brand-300 text-sm focus:outline-none focus:border-brand-300 focus:ring-1 focus:ring-brand-300"
+                />
+                <input
+                  type="text"
+                  name="parcel"
+                  placeholder="Parcel Address (optional)"
+                  class="px-4 py-3 rounded-lg bg-white/10 backdrop-blur border border-white/20 text-white placeholder-brand-300 text-sm focus:outline-none focus:border-brand-300 focus:ring-1 focus:ring-brand-300"
+                />
+                <button
+                  type="submit"
+                  class="px-6 py-3 bg-white text-brand-900 font-semibold rounded-lg hover:bg-brand-50 transition-colors text-sm"
+                >
+                  Get Connected
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other zones in this city -->
+        <div class="mt-8 text-center pb-4">
+          <a href={`/${zone.state_slug}/${zone.county_slug}/${zone.city_slug}/`}
+             class="text-sm text-brand-600 hover:text-brand-700 font-medium">
+            View all zoning districts in {zone.city_name} &rarr;
+          </a>
+        </div>
+      </>
+    ) : (
+      <div class="py-20 text-center">
+        <h1 class="text-2xl font-bold">Zone Not Found</h1>
+        <p class="mt-2 text-text-secondary">We don't have data for this zoning district.</p>
+        <a href={`/${stateSlug}/${countySlug}/${citySlug}/`} class="mt-4 inline-block text-brand-600 hover:text-brand-700 font-medium">Back to city</a>
+      </div>
+    )}
+  </div>
+</Base>
+
+{hasMap && (
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      var el = document.getElementById('map');
+      if (!el || !window.L) return;
+      var lat = parseFloat(el.dataset.lat);
+      var lng = parseFloat(el.dataset.lng);
+      var city = el.dataset.city;
+      var zoneCode = el.dataset.zone;
+      var map = L.map('map').setView([lat, lng], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+      L.marker([lat, lng]).addTo(map)
+        .bindPopup('<strong>' + zoneCode + '</strong><br>' + city)
+        .openPopup();
+    });
+  </script>
+)}
+
+<script is:inline>
+  // Permitted uses search + category filter
+  document.addEventListener('DOMContentLoaded', function() {
+    var search = document.getElementById('use-search');
+    var rows = document.querySelectorAll('.use-row');
+    var tabs = document.querySelectorAll('.cat-tab');
+    var noResults = document.getElementById('no-results');
+    var activeCategory = 'all';
+
+    function filterRows() {
+      var query = (search?.value || '').toLowerCase();
+      var visible = 0;
+      rows.forEach(function(row) {
+        var name = row.dataset.name || '';
+        var cat = row.dataset.category || '';
+        var matchSearch = !query || name.includes(query);
+        var matchCat = activeCategory === 'all' || cat === activeCategory;
+        var show = matchSearch && matchCat;
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+    }
+
+    if (search) search.addEventListener('input', filterRows);
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        activeCategory = this.dataset.category;
+        tabs.forEach(function(t) {
+          t.className = t.className
+            .replace('bg-brand-600 text-white border-brand-600', '')
+            .replace('bg-surface text-text-secondary border-border hover:border-brand-400', '');
+          if (t.dataset.category === activeCategory) {
+            t.className += ' bg-brand-600 text-white border-brand-600';
+          } else {
+            t.className += ' bg-surface text-text-secondary border-border hover:border-brand-400';
+          }
+        });
+        filterRows();
+      });
+    });
+  });
+</script>
