@@ -1,0 +1,62 @@
+name: Scrape & Ingest Zoning Data
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      state:
+        description: 'State to scrape (e.g. "texas") or leave empty for --all'
+        required: false
+      city:
+        description: 'Single city to scrape (e.g. "Dallas")'
+        required: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Gemini extraction
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.city }}" ]; then
+            node scripts/scraper/extract-grounded.mjs --city "${{ inputs.city }}"
+          elif [ -n "${{ inputs.state }}" ]; then
+            node scripts/scraper/extract-grounded.mjs --state "${{ inputs.state }}"
+          else
+            node scripts/scraper/extract-grounded.mjs --all
+          fi
+
+      - name: Ingest into D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # Ingest each scraped SQL file into remote D1
+          for f in db/scraped/*.sql; do
+            if [ -f "$f" ]; then
+              echo "Ingesting $f..."
+              npx wrangler d1 execute zoningbase-prod --remote --file="$f" || echo "Warning: $f failed"
+            fi
+          done
+
+      - name: Commit scraped data
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add db/scraped/ scripts/scraper/.cache/
+          git diff --staged --quiet || git commit -m "Auto-scrape: $(date +%Y-%m-%d) — $(ls db/scraped/*.sql 2>/dev/null | wc -l) city files"
+          git push || echo "Nothing to push"

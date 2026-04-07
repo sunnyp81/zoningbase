@@ -104,6 +104,50 @@
           ]
         }
       ]
+    },
+    {
+      "name": "California",
+      "abbreviation": "CA",
+      "cities": [
+        { "name": "Los Angeles", "county": "Los Angeles County", "population": 3898747, "latitude": 34.0522, "longitude": -118.2437, "platform": "amlegal", "urls": [] },
+        { "name": "San Diego", "county": "San Diego County", "population": 1386932, "latitude": 32.7157, "longitude": -117.1611, "platform": "municode", "urls": [] },
+        { "name": "San Jose", "county": "Santa Clara County", "population": 1013240, "latitude": 37.3382, "longitude": -121.8863, "platform": "municode", "urls": [] },
+        { "name": "San Francisco", "county": "San Francisco County", "population": 873965, "latitude": 37.7749, "longitude": -122.4194, "platform": "amlegal", "urls": [] },
+        { "name": "Sacramento", "county": "Sacramento County", "population": 524943, "latitude": 38.5816, "longitude": -121.4944, "platform": "municode", "urls": [] }
+      ]
+    },
+    {
+      "name": "Florida",
+      "abbreviation": "FL",
+      "cities": [
+        { "name": "Jacksonville", "county": "Duval County", "population": 949611, "latitude": 30.3322, "longitude": -81.6557, "platform": "municode", "urls": [] },
+        { "name": "Miami", "county": "Miami-Dade County", "population": 442241, "latitude": 25.7617, "longitude": -80.1918, "platform": "municode", "urls": [] },
+        { "name": "Tampa", "county": "Hillsborough County", "population": 384959, "latitude": 27.9506, "longitude": -82.4572, "platform": "municode", "urls": [] },
+        { "name": "Orlando", "county": "Orange County", "population": 307573, "latitude": 28.5383, "longitude": -81.3792, "platform": "municode", "urls": [] },
+        { "name": "St. Petersburg", "county": "Pinellas County", "population": 258308, "latitude": 27.7676, "longitude": -82.6403, "platform": "municode", "urls": [] }
+      ]
+    },
+    {
+      "name": "New York",
+      "abbreviation": "NY",
+      "cities": [
+        { "name": "New York City", "county": "New York County", "population": 8336817, "latitude": 40.7128, "longitude": -74.0060, "platform": "city", "urls": [] },
+        { "name": "Buffalo", "county": "Erie County", "population": 278349, "latitude": 42.8864, "longitude": -78.8784, "platform": "ecode360", "urls": [] },
+        { "name": "Rochester", "county": "Monroe County", "population": 211328, "latitude": 43.1566, "longitude": -77.6088, "platform": "ecode360", "urls": [] },
+        { "name": "Yonkers", "county": "Westchester County", "population": 211569, "latitude": 40.9312, "longitude": -73.8987, "platform": "ecode360", "urls": [] },
+        { "name": "Syracuse", "county": "Onondaga County", "population": 148620, "latitude": 43.0481, "longitude": -76.1474, "platform": "municode", "urls": [] }
+      ]
+    },
+    {
+      "name": "Illinois",
+      "abbreviation": "IL",
+      "cities": [
+        { "name": "Chicago", "county": "Cook County", "population": 2746388, "latitude": 41.8781, "longitude": -87.6298, "platform": "amlegal", "urls": [] },
+        { "name": "Aurora", "county": "Kane County", "population": 180542, "latitude": 41.7606, "longitude": -88.3201, "platform": "municode", "urls": [] },
+        { "name": "Naperville", "county": "DuPage County", "population": 149540, "latitude": 41.7508, "longitude": -88.1535, "platform": "municode", "urls": [] },
+        { "name": "Rockford", "county": "Winnebago County", "population": 148655, "latitude": 42.2711, "longitude": -89.0940, "platform": "municode", "urls": [] },
+        { "name": "Joliet", "county": "Will County", "population": 150362, "latitude": 41.5250, "longitude": -88.0817, "platform": "municode", "urls": [] }
+      ]
     }
   ]
 }
