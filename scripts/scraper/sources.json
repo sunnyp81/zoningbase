@@ -1,6 +1,1725 @@
 {
   "states": [
     {
+      "name": "Alabama",
+      "abbreviation": "AL",
+      "cities": [
+        {
+          "name": "Huntsville",
+          "county": "Madison County",
+          "population": 249102,
+          "latitude": 34.7304,
+          "longitude": -86.5859,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Montgomery",
+          "county": "Montgomery County",
+          "population": 193703,
+          "latitude": 32.3668,
+          "longitude": -86.3,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Mobile",
+          "county": "Mobile County",
+          "population": 204689,
+          "latitude": 30.6954,
+          "longitude": -88.0399,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Birmingham",
+          "county": "Jefferson County",
+          "population": 196357,
+          "latitude": 33.5207,
+          "longitude": -86.8025,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Tuscaloosa",
+          "county": "Tuscaloosa County",
+          "population": 118643,
+          "latitude": 33.2098,
+          "longitude": -87.5692,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Alaska",
+      "abbreviation": "AK",
+      "cities": [
+        {
+          "name": "Anchorage",
+          "county": "Anchorage Municipality",
+          "population": 291247,
+          "latitude": 61.2181,
+          "longitude": -149.9003,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "California",
+      "abbreviation": "CA",
+      "cities": [
+        {
+          "name": "Los Angeles",
+          "county": "Los Angeles County",
+          "population": 3898747,
+          "latitude": 34.0522,
+          "longitude": -118.2437,
+          "platform": "amlegal",
+          "urls": []
+        },
+        {
+          "name": "San Diego",
+          "county": "San Diego County",
+          "population": 1386932,
+          "latitude": 32.7157,
+          "longitude": -117.1611,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "San Jose",
+          "county": "Santa Clara County",
+          "population": 1013240,
+          "latitude": 37.3382,
+          "longitude": -121.8863,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "San Francisco",
+          "county": "San Francisco County",
+          "population": 873965,
+          "latitude": 37.7749,
+          "longitude": -122.4194,
+          "platform": "amlegal",
+          "urls": []
+        },
+        {
+          "name": "Sacramento",
+          "county": "Sacramento County",
+          "population": 524943,
+          "latitude": 38.5816,
+          "longitude": -121.4944,
+          "platform": "municode",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Colorado",
+      "abbreviation": "CO",
+      "cities": [
+        {
+          "name": "Denver",
+          "county": "Denver County",
+          "population": 734718,
+          "latitude": 39.7392,
+          "longitude": -104.9847,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Colorado Springs",
+          "county": "El Paso County",
+          "population": 499474,
+          "latitude": 38.8339,
+          "longitude": -104.8214,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Aurora",
+          "county": "Arapahoe County",
+          "population": 411293,
+          "latitude": 39.7294,
+          "longitude": -104.8319,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Fort Collins",
+          "county": "Larimer County",
+          "population": 171391,
+          "latitude": 40.5853,
+          "longitude": -105.0844,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lakewood",
+          "county": "Jefferson County",
+          "population": 157161,
+          "latitude": 39.7047,
+          "longitude": -105.0814,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Thornton",
+          "county": "Adams County",
+          "population": 148938,
+          "latitude": 39.9031,
+          "longitude": -104.9544,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Arvada",
+          "county": "Jefferson County",
+          "population": 120628,
+          "latitude": 39.8028,
+          "longitude": -105.0875,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Westminster",
+          "county": "Adams County",
+          "population": 114626,
+          "latitude": 39.8423,
+          "longitude": -105.0437,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Centennial",
+          "county": "Arapahoe County",
+          "population": 109178,
+          "latitude": 39.5792,
+          "longitude": -104.8767,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Boulder",
+          "county": "Boulder County",
+          "population": 105995,
+          "latitude": 40.015,
+          "longitude": -105.2705,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Connecticut",
+      "abbreviation": "CT",
+      "cities": [
+        {
+          "name": "Bridgeport",
+          "county": "Fairfield County",
+          "population": 149153,
+          "latitude": 41.1864,
+          "longitude": -73.1956,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Stamford",
+          "county": "Fairfield County",
+          "population": 137144,
+          "latitude": 41.0534,
+          "longitude": -73.5387,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "New Haven",
+          "county": "New Haven County",
+          "population": 134349,
+          "latitude": 41.3083,
+          "longitude": -72.925,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Hartford",
+          "county": "Hartford County",
+          "population": 121127,
+          "latitude": 41.7637,
+          "longitude": -72.6851,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Waterbury",
+          "county": "New Haven County",
+          "population": 114869,
+          "latitude": 41.5561,
+          "longitude": -73.0414,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "District of Columbia",
+      "abbreviation": "DC",
+      "cities": [
+        {
+          "name": "Washington",
+          "county": "District of Columbia",
+          "population": 717916,
+          "latitude": 38.8951,
+          "longitude": -77.0364,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Florida",
+      "abbreviation": "FL",
+      "cities": [
+        {
+          "name": "Jacksonville",
+          "county": "Duval County",
+          "population": 949611,
+          "latitude": 30.3322,
+          "longitude": -81.6557,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Miami",
+          "county": "Miami-Dade County",
+          "population": 442241,
+          "latitude": 25.7617,
+          "longitude": -80.1918,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Tampa",
+          "county": "Hillsborough County",
+          "population": 384959,
+          "latitude": 27.9506,
+          "longitude": -82.4572,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Orlando",
+          "county": "Orange County",
+          "population": 307573,
+          "latitude": 28.5383,
+          "longitude": -81.3792,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "St. Petersburg",
+          "county": "Pinellas County",
+          "population": 258308,
+          "latitude": 27.7676,
+          "longitude": -82.6403,
+          "platform": "municode",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Georgia",
+      "abbreviation": "GA",
+      "cities": [
+        {
+          "name": "Atlanta",
+          "county": "Fulton County",
+          "population": 520070,
+          "latitude": 33.7489,
+          "longitude": -84.39,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Augusta-Richmond County",
+          "county": "Richmond County",
+          "population": 206069,
+          "latitude": 33.47,
+          "longitude": -81.975,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Columbus",
+          "county": "Muscogee County",
+          "population": 203711,
+          "latitude": 32.4922,
+          "longitude": -84.9403,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Macon-Bibb County",
+          "county": "Bibb County",
+          "population": 156578,
+          "latitude": 32.8347,
+          "longitude": -83.6517,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Savannah",
+          "county": "Chatham County",
+          "population": 147898,
+          "latitude": 32.084,
+          "longitude": -81.1,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Athens-Clarke County",
+          "county": "Clarke County",
+          "population": 128423,
+          "latitude": 33.961,
+          "longitude": -83.378,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "South Fulton",
+          "county": "Fulton County",
+          "population": 110911,
+          "latitude": 33.593,
+          "longitude": -84.583,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Sandy Springs",
+          "county": "Fulton County",
+          "population": 105803,
+          "latitude": 33.9242,
+          "longitude": -84.3786,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Hawaii",
+      "abbreviation": "HI",
+      "cities": [
+        {
+          "name": "Honolulu",
+          "county": "City and County of Honolulu",
+          "population": 350964,
+          "latitude": 21.3156,
+          "longitude": -157.8581,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Idaho",
+      "abbreviation": "ID",
+      "cities": [
+        {
+          "name": "Boise",
+          "county": "Ada County",
+          "population": 235685,
+          "latitude": 43.6158,
+          "longitude": -116.2016,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Meridian",
+          "county": "Ada County",
+          "population": 117635,
+          "latitude": 43.6141,
+          "longitude": -116.3988,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Nampa",
+          "county": "Canyon County",
+          "population": 100200,
+          "latitude": 43.6013,
+          "longitude": -116.5277,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Illinois",
+      "abbreviation": "IL",
+      "cities": [
+        {
+          "name": "Chicago",
+          "county": "Cook County",
+          "population": 2746388,
+          "latitude": 41.8781,
+          "longitude": -87.6298,
+          "platform": "amlegal",
+          "urls": []
+        },
+        {
+          "name": "Aurora",
+          "county": "Kane County",
+          "population": 180542,
+          "latitude": 41.7606,
+          "longitude": -88.3201,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Naperville",
+          "county": "DuPage County",
+          "population": 149540,
+          "latitude": 41.7508,
+          "longitude": -88.1535,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Rockford",
+          "county": "Winnebago County",
+          "population": 148655,
+          "latitude": 42.2711,
+          "longitude": -89.094,
+          "platform": "municode",
+          "urls": []
+        },
+        {
+          "name": "Joliet",
+          "county": "Will County",
+          "population": 150362,
+          "latitude": 41.525,
+          "longitude": -88.0817,
+          "platform": "municode",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Indiana",
+      "abbreviation": "IN",
+      "cities": [
+        {
+          "name": "Indianapolis",
+          "county": "Marion County",
+          "population": 895436,
+          "latitude": 39.7684,
+          "longitude": -86.158,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Fort Wayne",
+          "county": "Allen County",
+          "population": 268589,
+          "latitude": 41.0793,
+          "longitude": -85.1394,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Evansville",
+          "county": "Vanderburgh County",
+          "population": 116116,
+          "latitude": 37.9748,
+          "longitude": -87.5558,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "South Bend",
+          "county": "St. Joseph County",
+          "population": 103085,
+          "latitude": 41.6764,
+          "longitude": -86.252,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Fishers",
+          "county": "Hamilton County",
+          "population": 102337,
+          "latitude": 39.9568,
+          "longitude": -86.0134,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Carmel",
+          "county": "Hamilton County",
+          "population": 101651,
+          "latitude": 39.9784,
+          "longitude": -86.118,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Iowa",
+      "abbreviation": "IA",
+      "cities": [
+        {
+          "name": "Des Moines",
+          "county": "Polk County",
+          "population": 212421,
+          "latitude": 41.6005,
+          "longitude": -93.6091,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Cedar Rapids",
+          "county": "Linn County",
+          "population": 137264,
+          "latitude": 42.0083,
+          "longitude": -91.6441,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Davenport",
+          "county": "Scott County",
+          "population": 100913,
+          "latitude": 41.5236,
+          "longitude": -90.5776,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Kansas",
+      "abbreviation": "KS",
+      "cities": [
+        {
+          "name": "Wichita",
+          "county": "Sedgwick County",
+          "population": 397532,
+          "latitude": 37.6889,
+          "longitude": -97.3361,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Overland Park",
+          "county": "Johnson County",
+          "population": 197238,
+          "latitude": 38.8869,
+          "longitude": -94.6869,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Kansas City",
+          "county": "Wyandotte County",
+          "population": 156607,
+          "latitude": 39.1067,
+          "longitude": -94.6764,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Olathe",
+          "county": "Johnson County",
+          "population": 141290,
+          "latitude": 38.8828,
+          "longitude": -94.8203,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Topeka",
+          "county": "Shawnee County",
+          "population": 126587,
+          "latitude": 39.0347,
+          "longitude": -95.6956,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Kentucky",
+      "abbreviation": "KY",
+      "cities": [
+        {
+          "name": "Louisville",
+          "county": "Jefferson County",
+          "population": 782969,
+          "latitude": 38.1561,
+          "longitude": -85.7514,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lexington",
+          "county": "Fayette County",
+          "population": 329437,
+          "latitude": 38.0464,
+          "longitude": -84.4969,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Louisiana",
+      "abbreviation": "LA",
+      "cities": [
+        {
+          "name": "New Orleans",
+          "county": "Orleans Parish",
+          "population": 371853,
+          "latitude": 29.9511,
+          "longitude": -90.0715,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Baton Rouge",
+          "county": "East Baton Rouge Parish",
+          "population": 222771,
+          "latitude": 30.4583,
+          "longitude": -91.1403,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Shreveport",
+          "county": "Caddo Parish",
+          "population": 180982,
+          "latitude": 32.5252,
+          "longitude": -93.7502,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lafayette",
+          "county": "Lafayette Parish",
+          "population": 121715,
+          "latitude": 30.2081,
+          "longitude": -92.0198,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Maryland",
+      "abbreviation": "MD",
+      "cities": [
+        {
+          "name": "Baltimore",
+          "county": "Baltimore City",
+          "population": 585708,
+          "latitude": 39.2992,
+          "longitude": -76.6094,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Columbia",
+          "county": "Howard County",
+          "population": 104681,
+          "latitude": 39.2037,
+          "longitude": -76.861,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Massachusetts",
+      "abbreviation": "MA",
+      "cities": [
+        {
+          "name": "Boston",
+          "county": "Suffolk County",
+          "population": 653833,
+          "latitude": 42.3584,
+          "longitude": -71.0598,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Worcester",
+          "county": "Worcester County",
+          "population": 206518,
+          "latitude": 42.268,
+          "longitude": -71.8023,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Springfield",
+          "county": "Hampden County",
+          "population": 154341,
+          "latitude": 42.1015,
+          "longitude": -72.5898,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Cambridge",
+          "county": "Middlesex County",
+          "population": 118403,
+          "latitude": 42.3708,
+          "longitude": -71.1063,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lowell",
+          "county": "Middlesex County",
+          "population": 115554,
+          "latitude": 42.6334,
+          "longitude": -71.3162,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Brockton",
+          "county": "Plymouth County",
+          "population": 105643,
+          "latitude": 42.0834,
+          "longitude": -71.0184,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Quincy",
+          "county": "Norfolk County",
+          "population": 101636,
+          "latitude": 42.2529,
+          "longitude": -71.0023,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lynn",
+          "county": "Essex County",
+          "population": 101253,
+          "latitude": 42.4668,
+          "longitude": -70.9495,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "New Bedford",
+          "county": "Bristol County",
+          "population": 101079,
+          "latitude": 41.6384,
+          "longitude": -70.9412,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Michigan",
+      "abbreviation": "MI",
+      "cities": [
+        {
+          "name": "Detroit",
+          "county": "Wayne County",
+          "population": 638530,
+          "latitude": 42.3314,
+          "longitude": -83.0458,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Grand Rapids",
+          "county": "Kent County",
+          "population": 198535,
+          "latitude": 42.9634,
+          "longitude": -85.6681,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Warren",
+          "county": "Macomb County",
+          "population": 137928,
+          "latitude": 42.4919,
+          "longitude": -83.0239,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Sterling Heights",
+          "county": "Macomb County",
+          "population": 133573,
+          "latitude": 42.5803,
+          "longitude": -83.0303,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Ann Arbor",
+          "county": "Washtenaw County",
+          "population": 122036,
+          "latitude": 42.2808,
+          "longitude": -83.743,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lansing",
+          "county": "Ingham County",
+          "population": 113023,
+          "latitude": 42.7325,
+          "longitude": -84.5555,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Dearborn",
+          "county": "Wayne County",
+          "population": 107423,
+          "latitude": 42.3223,
+          "longitude": -83.1763,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Minnesota",
+      "abbreviation": "MN",
+      "cities": [
+        {
+          "name": "Minneapolis",
+          "county": "Hennepin County",
+          "population": 429954,
+          "latitude": 44.9819,
+          "longitude": -93.2692,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Saint Paul",
+          "county": "Ramsey County",
+          "population": 311527,
+          "latitude": 44.9478,
+          "longitude": -93.1039,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Rochester",
+          "county": "Olmsted County",
+          "population": 121395,
+          "latitude": 44.0143,
+          "longitude": -92.4786,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Mississippi",
+      "abbreviation": "MS",
+      "cities": [
+        {
+          "name": "Jackson",
+          "county": "Hinds County",
+          "population": 146631,
+          "latitude": 32.2988,
+          "longitude": -90.1848,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Missouri",
+      "abbreviation": "MO",
+      "cities": [
+        {
+          "name": "Kansas City",
+          "county": "Jackson County",
+          "population": 508090,
+          "latitude": 39.0997,
+          "longitude": -94.5783,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "St. Louis",
+          "county": "St. Louis City",
+          "population": 301578,
+          "latitude": 38.6273,
+          "longitude": -90.1979,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Springfield",
+          "county": "Greene County",
+          "population": 169176,
+          "latitude": 37.2153,
+          "longitude": -93.2983,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Columbia",
+          "county": "Boone County",
+          "population": 126254,
+          "latitude": 38.9517,
+          "longitude": -92.3341,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Independence",
+          "county": "Jackson County",
+          "population": 123011,
+          "latitude": 39.0783,
+          "longitude": -94.4194,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lee's Summit",
+          "county": "Jackson County",
+          "population": 101108,
+          "latitude": 38.9172,
+          "longitude": -94.3817,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Montana",
+      "abbreviation": "MT",
+      "cities": [
+        {
+          "name": "Billings",
+          "county": "Yellowstone County",
+          "population": 123608,
+          "latitude": 45.7876,
+          "longitude": -108.4893,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Nebraska",
+      "abbreviation": "NE",
+      "cities": [
+        {
+          "name": "Omaha",
+          "county": "Douglas County",
+          "population": 489265,
+          "latitude": 41.2563,
+          "longitude": -95.9404,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lincoln",
+          "county": "Lancaster County",
+          "population": 300619,
+          "latitude": 40.8258,
+          "longitude": -96.6852,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Nevada",
+      "abbreviation": "NV",
+      "cities": [
+        {
+          "name": "Las Vegas",
+          "county": "Clark County",
+          "population": 660942,
+          "latitude": 36.1672,
+          "longitude": -115.1486,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Henderson",
+          "county": "Clark County",
+          "population": 337280,
+          "latitude": 36.0397,
+          "longitude": -114.9819,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "North Las Vegas",
+          "county": "Clark County",
+          "population": 284772,
+          "latitude": 36.2019,
+          "longitude": -115.1202,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Reno",
+          "county": "Washoe County",
+          "population": 274937,
+          "latitude": 39.5296,
+          "longitude": -119.8138,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Enterprise",
+          "county": "Clark County",
+          "population": 243802,
+          "latitude": 36.0255,
+          "longitude": -115.1922,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Spring Valley",
+          "county": "Clark County",
+          "population": 215597,
+          "latitude": 36.108,
+          "longitude": -115.245,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Sunrise Manor",
+          "county": "Clark County",
+          "population": 213644,
+          "latitude": 36.2111,
+          "longitude": -115.0731,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Paradise",
+          "county": "Clark County",
+          "population": 191238,
+          "latitude": 36.0972,
+          "longitude": -115.1467,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "New Hampshire",
+      "abbreviation": "NH",
+      "cities": [
+        {
+          "name": "Manchester",
+          "county": "Hillsborough County",
+          "population": 116823,
+          "latitude": 42.9956,
+          "longitude": -71.4548,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "New Jersey",
+      "abbreviation": "NJ",
+      "cities": [
+        {
+          "name": "Newark",
+          "county": "Essex County",
+          "population": 317303,
+          "latitude": 40.7357,
+          "longitude": -74.1724,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Jersey City",
+          "county": "Hudson County",
+          "population": 292500,
+          "latitude": 40.7191,
+          "longitude": -74.0506,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Paterson",
+          "county": "Passaic County",
+          "population": 159732,
+          "latitude": 40.9147,
+          "longitude": -74.1628,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Elizabeth",
+          "county": "Union County",
+          "population": 140413,
+          "latitude": 40.664,
+          "longitude": -74.2107,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Lakewood Township",
+          "county": "Ocean County",
+          "population": 141985,
+          "latitude": 40.0979,
+          "longitude": -74.2176,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Edison Township",
+          "county": "Middlesex County",
+          "population": 107588,
+          "latitude": 40.5187,
+          "longitude": -74.4121,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Woodbridge Township",
+          "county": "Middlesex County",
+          "population": 103639,
+          "latitude": 40.5576,
+          "longitude": -74.2846,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "New Mexico",
+      "abbreviation": "NM",
+      "cities": [
+        {
+          "name": "Albuquerque",
+          "county": "Bernalillo County",
+          "population": 558046,
+          "latitude": 35.084,
+          "longitude": -106.651,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Las Cruces",
+          "county": "Doña Ana County",
+          "population": 119636,
+          "latitude": 32.3123,
+          "longitude": -106.7783,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Rio Rancho",
+          "county": "Sandoval County",
+          "population": 116565,
+          "latitude": 35.2334,
+          "longitude": -106.6645,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "New York",
+      "abbreviation": "NY",
+      "cities": [
+        {
+          "name": "New York City",
+          "county": "New York County",
+          "population": 8336817,
+          "latitude": 40.7128,
+          "longitude": -74.006,
+          "platform": "city",
+          "urls": []
+        },
+        {
+          "name": "Buffalo",
+          "county": "Erie County",
+          "population": 278349,
+          "latitude": 42.8864,
+          "longitude": -78.8784,
+          "platform": "ecode360",
+          "urls": []
+        },
+        {
+          "name": "Rochester",
+          "county": "Monroe County",
+          "population": 211328,
+          "latitude": 43.1566,
+          "longitude": -77.6088,
+          "platform": "ecode360",
+          "urls": []
+        },
+        {
+          "name": "Yonkers",
+          "county": "Westchester County",
+          "population": 211569,
+          "latitude": 40.9312,
+          "longitude": -73.8987,
+          "platform": "ecode360",
+          "urls": []
+        },
+        {
+          "name": "Syracuse",
+          "county": "Onondaga County",
+          "population": 148620,
+          "latitude": 43.0481,
+          "longitude": -76.1474,
+          "platform": "municode",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "North Carolina",
+      "abbreviation": "NC",
+      "cities": [
+        {
+          "name": "Charlotte",
+          "county": "Mecklenburg County",
+          "population": 943476,
+          "latitude": 35.227,
+          "longitude": -80.843,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Raleigh",
+          "county": "Wake County",
+          "population": 499825,
+          "latitude": 35.772,
+          "longitude": -78.639,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Greensboro",
+          "county": "Guilford County",
+          "population": 307381,
+          "latitude": 36.0726,
+          "longitude": -79.792,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Durham",
+          "county": "Durham County",
+          "population": 301870,
+          "latitude": 35.994,
+          "longitude": -78.899,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Winston-Salem",
+          "county": "Forsyth County",
+          "population": 252975,
+          "latitude": 36.1017,
+          "longitude": -80.2563,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Fayetteville",
+          "county": "Cumberland County",
+          "population": 208501,
+          "latitude": 35.0527,
+          "longitude": -78.8784,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Cary",
+          "county": "Wake County",
+          "population": 180010,
+          "latitude": 35.7915,
+          "longitude": -78.7811,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Wilmington",
+          "county": "New Hanover County",
+          "population": 126562,
+          "latitude": 34.2257,
+          "longitude": -77.9447,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "High Point",
+          "county": "Guilford County",
+          "population": 116926,
+          "latitude": 35.9557,
+          "longitude": -80.0053,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Concord",
+          "county": "Cabarrus County",
+          "population": 117194,
+          "latitude": 35.4088,
+          "longitude": -80.5795,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "North Dakota",
+      "abbreviation": "ND",
+      "cities": [
+        {
+          "name": "Fargo",
+          "county": "Cass County",
+          "population": 136285,
+          "latitude": 46.8772,
+          "longitude": -96.7898,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Ohio",
+      "abbreviation": "OH",
+      "cities": [
+        {
+          "name": "Columbus",
+          "county": "Franklin County",
+          "population": 905748,
+          "latitude": 39.9622,
+          "longitude": -83.0006,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Cleveland",
+          "county": "Cuyahoga County",
+          "population": 372624,
+          "latitude": 41.4995,
+          "longitude": -81.6954,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Cincinnati",
+          "county": "Hamilton County",
+          "population": 309317,
+          "latitude": 39.162,
+          "longitude": -84.4569,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Toledo",
+          "county": "Lucas County",
+          "population": 270871,
+          "latitude": 41.6639,
+          "longitude": -83.5552,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Akron",
+          "county": "Summit County",
+          "population": 190469,
+          "latitude": 41.0814,
+          "longitude": -81.519,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Dayton",
+          "county": "Montgomery County",
+          "population": 137644,
+          "latitude": 39.759,
+          "longitude": -84.1916,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Oklahoma",
+      "abbreviation": "OK",
+      "cities": [
+        {
+          "name": "Oklahoma City",
+          "county": "Oklahoma County",
+          "population": 702654,
+          "latitude": 35.4676,
+          "longitude": -97.5164,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Tulsa",
+          "county": "Tulsa County",
+          "population": 413794,
+          "latitude": 36.154,
+          "longitude": -95.9928,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Norman",
+          "county": "Cleveland County",
+          "population": 132425,
+          "latitude": 35.2226,
+          "longitude": -97.4395,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Broken Arrow",
+          "county": "Tulsa County",
+          "population": 119666,
+          "latitude": 36.0609,
+          "longitude": -95.7975,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Oregon",
+      "abbreviation": "OR",
+      "cities": [
+        {
+          "name": "Portland",
+          "county": "Multnomah County",
+          "population": 652503,
+          "latitude": 45.5235,
+          "longitude": -122.6762,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Eugene",
+          "county": "Lane County",
+          "population": 176654,
+          "latitude": 44.0521,
+          "longitude": -123.0868,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Salem",
+          "county": "Marion County",
+          "population": 175535,
+          "latitude": 44.9429,
+          "longitude": -123.0351,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Gresham",
+          "county": "Multnomah County",
+          "population": 114247,
+          "latitude": 45.4982,
+          "longitude": -122.4315,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Hillsboro",
+          "county": "Washington County",
+          "population": 106447,
+          "latitude": 45.5229,
+          "longitude": -122.9898,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Bend",
+          "county": "Deschutes County",
+          "population": 106926,
+          "latitude": 44.0581,
+          "longitude": -121.3153,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Pennsylvania",
+      "abbreviation": "PA",
+      "cities": [
+        {
+          "name": "Philadelphia",
+          "county": "Philadelphia County",
+          "population": 1579706,
+          "latitude": 39.9523,
+          "longitude": -75.1638,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Pittsburgh",
+          "county": "Allegheny County",
+          "population": 304759,
+          "latitude": 40.4406,
+          "longitude": -79.9959,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Allentown",
+          "county": "Lehigh County",
+          "population": 125976,
+          "latitude": 40.6084,
+          "longitude": -75.4902,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Rhode Island",
+      "abbreviation": "RI",
+      "cities": [
+        {
+          "name": "Providence",
+          "county": "Providence County",
+          "population": 190934,
+          "latitude": 41.824,
+          "longitude": -71.4128,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "South Carolina",
+      "abbreviation": "SC",
+      "cities": [
+        {
+          "name": "Charleston",
+          "county": "Charleston County",
+          "population": 157665,
+          "latitude": 32.7766,
+          "longitude": -79.9309,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Columbia",
+          "county": "Richland County",
+          "population": 142416,
+          "latitude": 34.0007,
+          "longitude": -81.0348,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "North Charleston",
+          "county": "Charleston County",
+          "population": 121463,
+          "latitude": 32.8853,
+          "longitude": -80.0169,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "South Dakota",
+      "abbreviation": "SD",
+      "cities": [
+        {
+          "name": "Sioux Falls",
+          "county": "Minnehaha County",
+          "population": 217209,
+          "latitude": 43.5364,
+          "longitude": -96.7317,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
+      "name": "Tennessee",
+      "abbreviation": "TN",
+      "cities": [
+        {
+          "name": "Nashville",
+          "county": "Davidson County",
+          "population": 687788,
+          "latitude": 36.1627,
+          "longitude": -86.7816,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Memphis",
+          "county": "Shelby County",
+          "population": 618639,
+          "latitude": 35.1493,
+          "longitude": -90.0576,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Knoxville",
+          "county": "Knox County",
+          "population": 198162,
+          "latitude": 35.9606,
+          "longitude": -83.9207,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Chattanooga",
+          "county": "Hamilton County",
+          "population": 187030,
+          "latitude": 35.0456,
+          "longitude": -85.3097,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Clarksville",
+          "county": "Montgomery County",
+          "population": 180716,
+          "latitude": 36.5313,
+          "longitude": -87.3538,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Murfreesboro",
+          "county": "Rutherford County",
+          "population": 165430,
+          "latitude": 35.8461,
+          "longitude": -86.3919,
+          "platform": "gemini",
+          "urls": []
+        }
+      ]
+    },
+    {
       "name": "Texas",
       "abbreviation": "TX",
       "cities": [
@@ -20,7 +1739,7 @@
           "county": "Dallas County",
           "population": 1304379,
           "latitude": 32.7767,
-          "longitude": -96.7970,
+          "longitude": -96.797,
           "platform": "amlegal",
           "urls": [
             "https://codelibrary.amlegal.com/codes/dallas/latest/dallas_tx/0-0-0-75160"
@@ -42,7 +1761,7 @@
           "county": "El Paso County",
           "population": 681124,
           "latitude": 31.7619,
-          "longitude": -106.4850,
+          "longitude": -106.485,
           "platform": "municode",
           "urls": [
             "https://library.municode.com/tx/el_paso/codes/code_of_ordinances?nodeId=TIT20ZO_CH20.06ZODIMA"
@@ -106,47 +1825,252 @@
       ]
     },
     {
-      "name": "California",
-      "abbreviation": "CA",
+      "name": "Utah",
+      "abbreviation": "UT",
       "cities": [
-        { "name": "Los Angeles", "county": "Los Angeles County", "population": 3898747, "latitude": 34.0522, "longitude": -118.2437, "platform": "amlegal", "urls": [] },
-        { "name": "San Diego", "county": "San Diego County", "population": 1386932, "latitude": 32.7157, "longitude": -117.1611, "platform": "municode", "urls": [] },
-        { "name": "San Jose", "county": "Santa Clara County", "population": 1013240, "latitude": 37.3382, "longitude": -121.8863, "platform": "municode", "urls": [] },
-        { "name": "San Francisco", "county": "San Francisco County", "population": 873965, "latitude": 37.7749, "longitude": -122.4194, "platform": "amlegal", "urls": [] },
-        { "name": "Sacramento", "county": "Sacramento County", "population": 524943, "latitude": 38.5816, "longitude": -121.4944, "platform": "municode", "urls": [] }
+        {
+          "name": "Salt Lake City",
+          "county": "Salt Lake County",
+          "population": 209606,
+          "latitude": 40.7608,
+          "longitude": -111.891,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "West Valley City",
+          "county": "Salt Lake County",
+          "population": 134466,
+          "latitude": 40.6916,
+          "longitude": -112.0011,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "West Jordan",
+          "county": "Salt Lake County",
+          "population": 114908,
+          "latitude": 40.6097,
+          "longitude": -111.9391,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Provo",
+          "county": "Utah County",
+          "population": 113355,
+          "latitude": 40.2338,
+          "longitude": -111.6585,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "St. George",
+          "county": "Washington County",
+          "population": 104592,
+          "latitude": 37.1041,
+          "longitude": -113.5841,
+          "platform": "gemini",
+          "urls": []
+        }
       ]
     },
     {
-      "name": "Florida",
-      "abbreviation": "FL",
+      "name": "Virginia",
+      "abbreviation": "VA",
       "cities": [
-        { "name": "Jacksonville", "county": "Duval County", "population": 949611, "latitude": 30.3322, "longitude": -81.6557, "platform": "municode", "urls": [] },
-        { "name": "Miami", "county": "Miami-Dade County", "population": 442241, "latitude": 25.7617, "longitude": -80.1918, "platform": "municode", "urls": [] },
-        { "name": "Tampa", "county": "Hillsborough County", "population": 384959, "latitude": 27.9506, "longitude": -82.4572, "platform": "municode", "urls": [] },
-        { "name": "Orlando", "county": "Orange County", "population": 307573, "latitude": 28.5383, "longitude": -81.3792, "platform": "municode", "urls": [] },
-        { "name": "St. Petersburg", "county": "Pinellas County", "population": 258308, "latitude": 27.7676, "longitude": -82.6403, "platform": "municode", "urls": [] }
+        {
+          "name": "Virginia Beach",
+          "county": "Virginia Beach City",
+          "population": 453649,
+          "latitude": 36.853,
+          "longitude": -75.978,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Chesapeake",
+          "county": "Chesapeake City",
+          "population": 253886,
+          "latitude": 36.819,
+          "longitude": -76.275,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Arlington",
+          "county": "Arlington County",
+          "population": 238643,
+          "latitude": 38.881,
+          "longitude": -77.104,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Norfolk",
+          "county": "Norfolk City",
+          "population": 230930,
+          "latitude": 36.847,
+          "longitude": -76.285,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Richmond",
+          "county": "Richmond City",
+          "population": 229247,
+          "latitude": 37.554,
+          "longitude": -77.46,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Newport News",
+          "county": "Newport News City",
+          "population": 183118,
+          "latitude": 36.98,
+          "longitude": -76.43,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Alexandria",
+          "county": "Alexandria City",
+          "population": 155230,
+          "latitude": 38.805,
+          "longitude": -77.047,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Hampton",
+          "county": "Hampton City",
+          "population": 137098,
+          "latitude": 37.03,
+          "longitude": -76.345,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Suffolk",
+          "county": "Suffolk City",
+          "population": 107260,
+          "latitude": 36.7282,
+          "longitude": -76.5836,
+          "platform": "gemini",
+          "urls": []
+        }
       ]
     },
     {
-      "name": "New York",
-      "abbreviation": "NY",
+      "name": "Washington",
+      "abbreviation": "WA",
       "cities": [
-        { "name": "New York City", "county": "New York County", "population": 8336817, "latitude": 40.7128, "longitude": -74.0060, "platform": "city", "urls": [] },
-        { "name": "Buffalo", "county": "Erie County", "population": 278349, "latitude": 42.8864, "longitude": -78.8784, "platform": "ecode360", "urls": [] },
-        { "name": "Rochester", "county": "Monroe County", "population": 211328, "latitude": 43.1566, "longitude": -77.6088, "platform": "ecode360", "urls": [] },
-        { "name": "Yonkers", "county": "Westchester County", "population": 211569, "latitude": 40.9312, "longitude": -73.8987, "platform": "ecode360", "urls": [] },
-        { "name": "Syracuse", "county": "Onondaga County", "population": 148620, "latitude": 43.0481, "longitude": -76.1474, "platform": "municode", "urls": [] }
+        {
+          "name": "Seattle",
+          "county": "King County",
+          "population": 766644,
+          "latitude": 47.6062,
+          "longitude": -122.3321,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Spokane",
+          "county": "Spokane County",
+          "population": 231311,
+          "latitude": 47.6597,
+          "longitude": -117.4291,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Tacoma",
+          "county": "Pierce County",
+          "population": 232425,
+          "latitude": 47.2587,
+          "longitude": -122.466,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Vancouver",
+          "county": "Clark County",
+          "population": 202846,
+          "latitude": 45.6333,
+          "longitude": -122.6,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Bellevue",
+          "county": "King County",
+          "population": 155672,
+          "latitude": 47.6104,
+          "longitude": -122.2007,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Kent",
+          "county": "King County",
+          "population": 136585,
+          "latitude": 47.3809,
+          "longitude": -122.2348,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Everett",
+          "county": "Snohomish County",
+          "population": 114070,
+          "latitude": 47.979,
+          "longitude": -122.2021,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Renton",
+          "county": "King County",
+          "population": 104947,
+          "latitude": 47.4829,
+          "longitude": -122.2171,
+          "platform": "gemini",
+          "urls": []
+        }
       ]
     },
     {
-      "name": "Illinois",
-      "abbreviation": "IL",
+      "name": "Wisconsin",
+      "abbreviation": "WI",
       "cities": [
-        { "name": "Chicago", "county": "Cook County", "population": 2746388, "latitude": 41.8781, "longitude": -87.6298, "platform": "amlegal", "urls": [] },
-        { "name": "Aurora", "county": "Kane County", "population": 180542, "latitude": 41.7606, "longitude": -88.3201, "platform": "municode", "urls": [] },
-        { "name": "Naperville", "county": "DuPage County", "population": 149540, "latitude": 41.7508, "longitude": -88.1535, "platform": "municode", "urls": [] },
-        { "name": "Rockford", "county": "Winnebago County", "population": 148655, "latitude": 42.2711, "longitude": -89.0940, "platform": "municode", "urls": [] },
-        { "name": "Joliet", "county": "Will County", "population": 150362, "latitude": 41.5250, "longitude": -88.0817, "platform": "municode", "urls": [] }
+        {
+          "name": "Milwaukee",
+          "county": "Milwaukee County",
+          "population": 577222,
+          "latitude": 43.0389,
+          "longitude": -87.9065,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Madison",
+          "county": "Dane County",
+          "population": 269840,
+          "latitude": 43.073,
+          "longitude": -89.401,
+          "platform": "gemini",
+          "urls": []
+        },
+        {
+          "name": "Green Bay",
+          "county": "Brown County",
+          "population": 107365,
+          "latitude": 44.5192,
+          "longitude": -88.0198,
+          "platform": "gemini",
+          "urls": []
+        }
       ]
     }
   ]
