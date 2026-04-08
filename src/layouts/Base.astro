@@ -42,6 +42,15 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
     <slot name="head" />
+
+    <!-- GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQX27HNP19"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GQX27HNP19');
+    </script>
   </head>
   <body class="bg-surface text-text font-sans min-h-screen flex flex-col">
     <Navbar />
