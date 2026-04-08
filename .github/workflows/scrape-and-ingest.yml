@@ -12,11 +12,15 @@ on:
       city:
         description: 'Single city to scrape (e.g. "Dallas")'
         required: false
+      skip_expand:
+        description: 'Skip auto-expanding sources (true/false)'
+        required: false
+        default: 'false'
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +31,17 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Auto-expand sources (discover new cities)
+        if: inputs.skip_expand != 'true' && inputs.city == ''
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.state }}" ]; then
+            node scripts/scraper/expand-sources.mjs --state "${{ inputs.state }}" --min-pop 100000
+          else
+            node scripts/scraper/expand-sources.mjs --min-pop 100000
+          fi
 
       - name: Run Gemini extraction
         env:
@@ -45,7 +60,6 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          # Ingest each scraped SQL file into remote D1
           for f in db/scraped/*.sql; do
             if [ -f "$f" ]; then
               echo "Ingesting $f..."
@@ -53,10 +67,10 @@ jobs:
             fi
           done
 
-      - name: Commit scraped data
+      - name: Commit all changes
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add db/scraped/ scripts/scraper/.cache/
+          git add db/scraped/ scripts/scraper/sources.json scripts/scraper/.cache/
           git diff --staged --quiet || git commit -m "Auto-scrape: $(date +%Y-%m-%d) — $(ls db/scraped/*.sql 2>/dev/null | wc -l) city files"
           git push || echo "Nothing to push"
