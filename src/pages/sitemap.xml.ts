@@ -4,7 +4,7 @@ import { getDB } from '../lib/db';
 export const GET: APIRoute = async ({ locals }) => {
   const db = getDB(locals);
 
-  const [states, counties, cities] = await Promise.all([
+  const [states, counties, cities, zones] = await Promise.all([
     db.prepare('SELECT slug FROM states ORDER BY name').all<{ slug: string }>(),
     db
       .prepare(
@@ -22,6 +22,16 @@ export const GET: APIRoute = async ({ locals }) => {
          ORDER BY s.name, co.name, ci.name`
       )
       .all<{ state_slug: string; county_slug: string; city_slug: string }>(),
+    db
+      .prepare(
+        `SELECT s.slug AS state_slug, co.slug AS county_slug, ci.slug AS city_slug, z.zone_code_slug
+         FROM zones z
+         JOIN cities ci ON z.city_id = ci.id
+         JOIN counties co ON ci.county_id = co.id
+         JOIN states s ON co.state_id = s.id
+         ORDER BY s.name, co.name, ci.name, z.zone_code`
+      )
+      .all<{ state_slug: string; county_slug: string; city_slug: string; zone_code_slug: string }>(),
   ]);
 
   const base = 'https://zoningbase.com';
@@ -29,6 +39,10 @@ export const GET: APIRoute = async ({ locals }) => {
 
   const urls: string[] = [
     `<url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>`,
+    `<url><loc>${base}/about/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>`,
+    `<url><loc>${base}/privacy/</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.1</priority></url>`,
+    `<url><loc>${base}/terms/</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.1</priority></url>`,
+    `<url><loc>${base}/contact/</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>`,
   ];
 
   for (const { slug } of states.results) {
@@ -46,6 +60,12 @@ export const GET: APIRoute = async ({ locals }) => {
   for (const { state_slug, county_slug, city_slug } of cities.results) {
     urls.push(
       `<url><loc>${base}/${state_slug}/${county_slug}/${city_slug}/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>`
+    );
+  }
+
+  for (const { state_slug, county_slug, city_slug, zone_code_slug } of zones.results) {
+    urls.push(
+      `<url><loc>${base}/${state_slug}/${county_slug}/${city_slug}/zoning/${zone_code_slug}/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>`
     );
   }
 

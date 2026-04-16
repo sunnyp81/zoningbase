@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="About ZoningBase | US Zoning Code Database"
+  description="ZoningBase standardizes municipal zoning codes across American cities into one searchable platform for CRE professionals, developers, and architects."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold">About ZoningBase</h1>
+
+    <div class="mt-8 prose prose-slate max-w-none space-y-6 text-text-secondary leading-relaxed">
+      <p>
+        ZoningBase is a structured database of US municipal zoning codes, development standards, and permitted uses. We normalize ordinance data from cities across America into a single, searchable format built for commercial real estate professionals, developers, architects, and land use attorneys.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text mt-10">Why ZoningBase Exists</h2>
+      <p>
+        Every US municipality publishes its own zoning ordinance in its own format — buried in PDFs, scattered across planning department websites, and written in inconsistent legal language. A developer evaluating sites across multiple cities spends hours just finding basic setback and FAR data.
+      </p>
+      <p>
+        ZoningBase solves this by extracting, normalizing, and structuring zoning data into a consistent schema. Zone codes, height limits, floor area ratios, lot minimums, setbacks, impervious cover, parking requirements, and permitted uses — all in one place, all in the same format.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text mt-10">How It Works</h2>
+      <p>
+        We source zoning ordinance data from publicly available municipal records, including city planning department publications, municipal code repositories, and GIS portals. This data is then processed through our normalization pipeline, which maps each city's unique zoning terminology to a standardized schema covering development standards and permitted use categories.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text mt-10">Coverage</h2>
+      <p>
+        ZoningBase is expanding city by city. We prioritize markets with active commercial development, starting with major metro areas and extending to mid-size cities. Each city entry includes every zone district, its development standards, and a full permitted use matrix.
+      </p>
+
+      <h2 class="text-xl font-semibold text-text mt-10">Data Accuracy</h2>
+      <p>
+        Zoning codes change. Municipalities amend ordinances, rezone parcels, and adopt new comprehensive plans. While we work to keep data current, ZoningBase is a reference tool — not a substitute for verification with local planning departments. Always confirm zoning data with the relevant jurisdiction before making development or investment decisions.
+      </p>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-border">
+      <a href="/" class="text-brand-600 hover:text-brand-700 font-medium text-sm">
+        &larr; Back to all states
+      </a>
+    </div>
+  </div>
+</Base>

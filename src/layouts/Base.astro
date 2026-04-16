@@ -43,6 +43,19 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
     <title>{title}</title>
     <slot name="head" />
 
+    <!-- Organization Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'ZoningBase',
+      url: 'https://zoningbase.com/',
+      description: 'Standardized US municipal zoning codes, development standards, and permitted uses for every city.',
+      publisher: {
+        '@type': 'Organization',
+        name: 'ZoningBase',
+        url: 'https://zoningbase.com/',
+      },
+    })} />
     <!-- GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQX27HNP19"></script>
     <script is:inline>

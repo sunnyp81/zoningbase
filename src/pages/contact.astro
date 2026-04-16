@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Contact ZoningBase | US Zoning Code Database"
+  description="Get in touch with ZoningBase for questions about zoning data, partnerships, or feedback."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <h1 class="text-3xl sm:text-4xl font-bold">Contact Us</h1>
+    <p class="mt-3 text-text-secondary leading-relaxed">
+      Have a question about zoning data, want to report an inaccuracy, or interested in partnering with ZoningBase? We'd like to hear from you.
+    </p>
+
+    <form
+      action="https://www.staticforms.xyz/api/v1/submit"
+      method="post"
+      class="mt-10 space-y-6"
+    >
+      <input type="hidden" name="_site" value="zoningbase.com" />
+      <input type="hidden" name="accessKey" value="sf_9e906eb6c00416b9d3354749" />
+      <input type="hidden" name="subject" value="Enquiry from zoningbase.com" />
+      <input type="hidden" name="redirectTo" value="https://zoningbase.com/contact/?sent=1" />
+      <input type="text" name="honeypot" style="display:none" />
+
+      <div>
+        <label for="name" class="block text-sm font-medium text-text">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="mt-1 w-full px-4 py-3 rounded-lg border border-border bg-surface text-text text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400"
+          placeholder="Your name"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-text">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="mt-1 w-full px-4 py-3 rounded-lg border border-border bg-surface text-text text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-medium text-text">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          required
+          class="mt-1 w-full px-4 py-3 rounded-lg border border-border bg-surface text-text text-sm focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 resize-y"
+          placeholder="How can we help?"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg transition-colors text-sm"
+      >
+        Send Message
+      </button>
+    </form>
+
+    <div class="mt-12 pt-8 border-t border-border">
+      <a href="/" class="text-brand-600 hover:text-brand-700 font-medium text-sm">
+        &larr; Back to all states
+      </a>
+    </div>
+  </div>
+</Base>
