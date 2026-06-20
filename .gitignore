@@ -25,3 +25,16 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# leak-scan: appended 2026-05-01
+.env.*
+.env.local
+*.pem
+*.key
+credentials.json
+credentials*.json
+secrets.*
+.vercel/
+.next/cache/
+wordpress-config.md
+master-builds.md
