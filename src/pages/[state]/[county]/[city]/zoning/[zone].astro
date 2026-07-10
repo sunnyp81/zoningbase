@@ -335,7 +335,18 @@ const categories = [...usesByCategory.keys()];
                   Navigating {zone.zone_code} requirements? Connect with a local land use attorney who understands {zone.city_name}'s zoning code to discuss your parcel and development plans.
                 </p>
               </div>
-              <form class="grid grid-cols-1 gap-3 w-full lg:w-80 shrink-0" id="lead-form">
+              <form
+                class="grid grid-cols-1 gap-3 w-full lg:w-80 shrink-0"
+                id="lead-form"
+                action="https://www.staticforms.xyz/api/v1/submit"
+                method="post"
+                data-ga-form="zoning_lead"
+              >
+                <input type="hidden" name="_site" value="zoningbase.com" />
+                <input type="hidden" name="accessKey" value="sf_9e906eb6c00416b9d3354749" />
+                <input type="hidden" name="subject" value={`Zoning lead: ${zone.city_name} ${zone.zone_code}`} />
+                <input type="hidden" name="redirectTo" value={`https://zoningbase.com/${zone.state_slug}/${zone.county_slug}/${zone.city_slug}/zoning/${zone.zone_code_slug}/?sent=1`} />
+                <input type="text" name="honeypot" style="display:none" />
                 <input
                   type="text"
                   name="name"

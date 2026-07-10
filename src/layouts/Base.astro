@@ -64,6 +64,19 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
       gtag('js', new Date());
       gtag('config', 'G-GQX27HNP19');
     </script>
+    <!-- GA4 form_submit event: fires for any StaticForms lead/contact form on the page -->
+    <script is:inline>
+      document.addEventListener('submit', function (e) {
+        var form = e.target;
+        if (!form || !form.action || form.action.indexOf('staticforms.xyz') === -1) return;
+        if (window.gtag) {
+          gtag('event', 'form_submit', {
+            form_id: form.id || form.getAttribute('data-ga-form') || 'unknown',
+            page_path: window.location.pathname,
+          });
+        }
+      }, true);
+    </script>
   </head>
   <body class="bg-surface text-text font-sans min-h-screen flex flex-col">
     <Navbar />
