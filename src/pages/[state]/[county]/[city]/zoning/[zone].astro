@@ -110,6 +110,9 @@ if (zone) {
   const nUses = permittedUses?.results.length ?? 0;
   if (nUses > 0) descParts.push(`${nUses} permitted uses`);
 }
+const metaDescription = zone
+  ? `${zone.zone_name} (${zone.zone_code}) in ${zone.city_name}, ${zone.state_name}. Height limit ${zone.max_height_ft ?? 'N/A'} ft, FAR ${zone.far ?? 'N/A'}, ${permittedUses?.results.length ?? 0} permitted uses.`
+  : '';
 const description = zone
   ? `${zone.zone_name} (${zone.zone_code}) in ${zone.city_name}, ${zone.state_name}.${descParts.length ? ' ' + descParts.join(', ') + '.' : ' Development standards and permitted uses.'}`
   : '';
@@ -134,7 +137,7 @@ const jsonLd = zone ? {
 const categories = [...usesByCategory.keys()];
 ---
 
-<Base title={title} description={description} ogType="article">
+<Base title={title} description={metaDescription} ogType="article">
   {zone && (
     <Fragment slot="head">
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
