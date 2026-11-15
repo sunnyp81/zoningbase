@@ -63,53 +63,72 @@ if (permittedUses?.results) {
   }
 }
 
-// Development standards — only include non-null values
-const standards: { label: string; value: string; icon: string }[] = [];
+// Development standards: some stored values are free text from extraction, so only
+// real numbers get units and the stat tiles; text values show as plain text.
+const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+const standards: { label: string; value: string; icon: string; numeric: boolean }[] = [];
 if (zone) {
-  if (zone.max_height_ft != null) standards.push({ label: 'Max Building Height', value: `${zone.max_height_ft} ft`, icon: 'height' });
-  if (zone.far != null) standards.push({ label: 'Floor Area Ratio', value: zone.far.toString(), icon: 'far' });
-  if (zone.min_lot_size_sqft != null) standards.push({ label: 'Minimum Lot Size', value: `${zone.min_lot_size_sqft.toLocaleString()} sqft`, icon: 'lot' });
-  if (zone.max_impervious_cover_pct != null) standards.push({ label: 'Max Impervious Cover', value: `${zone.max_impervious_cover_pct}%`, icon: 'cover' });
-  if (zone.setback_front_ft != null) standards.push({ label: 'Front Setback', value: `${zone.setback_front_ft} ft`, icon: 'setback' });
-  if (zone.setback_rear_ft != null) standards.push({ label: 'Rear Setback', value: `${zone.setback_rear_ft} ft`, icon: 'setback' });
-  if (zone.setback_side_ft != null) standards.push({ label: 'Side Setback', value: `${zone.setback_side_ft} ft`, icon: 'setback' });
+  const add = (label: string, raw: unknown, fmt: (n: number) => string, icon: string) => {
+    if (raw == null || raw === '') return;
+    const n = num(raw);
+    if (n != null) standards.push({ label, value: fmt(n), icon, numeric: true });
+    else standards.push({ label, value: String(raw), icon, numeric: false });
+  };
+  add('Max Building Height', zone.max_height_ft, (n) => `${n} ft`, 'height');
+  add('Floor Area Ratio', zone.far, (n) => n.toString(), 'far');
+  add('Minimum Lot Size', zone.min_lot_size_sqft, (n) => `${n.toLocaleString('en-US')} sqft`, 'lot');
+  add('Max Impervious Cover', zone.max_impervious_cover_pct, (n) => `${n}%`, 'cover');
+  add('Front Setback', zone.setback_front_ft, (n) => `${n} ft`, 'setback');
+  add('Rear Setback', zone.setback_rear_ft, (n) => `${n} ft`, 'setback');
+  add('Side Setback', zone.setback_side_ft, (n) => `${n} ft`, 'setback');
 }
+const statTiles = standards.filter((s) => s.numeric).slice(0, 4);
+
+// Other districts in the same city, for internal links
+const siblings = zone
+  ? await db
+      .prepare(
+        `SELECT zone_code, zone_code_slug, zone_name FROM zones
+         WHERE city_id = (SELECT city_id FROM zones WHERE id = ?) AND id != ?
+         ORDER BY zone_code LIMIT 12`
+      )
+      .bind(zone.id, zone.id)
+      .all<{ zone_code: string; zone_code_slug: string; zone_name: string }>()
+  : null;
 
 const hasMap = zone?.latitude != null && zone?.longitude != null;
 
 const title = zone
   ? `${zone.city_name} ${zone.zone_code} Zoning Code & Permitted Uses | ZoningBase`
   : 'Zone Not Found | ZoningBase';
+const descParts: string[] = [];
+if (zone) {
+  const h = num(zone.max_height_ft);
+  const f = num(zone.far);
+  if (h != null) descParts.push(`Height limit ${h} ft`);
+  if (f != null) descParts.push(`FAR ${f}`);
+  const nUses = permittedUses?.results.length ?? 0;
+  if (nUses > 0) descParts.push(`${nUses} permitted uses`);
+}
 const description = zone
-  ? `${zone.zone_name} (${zone.zone_code}) in ${zone.city_name}, ${zone.state_name}. Height limit ${zone.max_height_ft ?? 'N/A'} ft, FAR ${zone.far ?? 'N/A'}, ${permittedUses?.results.length ?? 0} permitted uses.`
+  ? `${zone.zone_name} (${zone.zone_code}) in ${zone.city_name}, ${zone.state_name}.${descParts.length ? ' ' + descParts.join(', ') + '.' : ' Development standards and permitted uses.'}`
   : '';
 
 // JSON-LD structured data
 const jsonLd = zone ? {
   '@context': 'https://schema.org',
-  '@type': 'GovernmentService',
-  name: `${zone.zone_code} — ${zone.zone_name}`,
-  description: zone.description ?? description,
-  serviceType: 'Zoning Regulation',
-  areaServed: {
-    '@type': 'City',
+  '@type': 'WebPage',
+  name: `${zone.city_name} ${zone.zone_code} zoning district`,
+  description,
+  about: {
+    '@type': 'Place',
     name: zone.city_name,
-    containedInPlace: {
-      '@type': 'State',
-      name: zone.state_name,
-    },
+    containedInPlace: { '@type': 'State', name: zone.state_name },
     ...(zone.latitude && zone.longitude ? {
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: zone.latitude,
-        longitude: zone.longitude,
-      },
+      geo: { '@type': 'GeoCoordinates', latitude: zone.latitude, longitude: zone.longitude },
     } : {}),
   },
-  provider: {
-    '@type': 'GovernmentOrganization',
-    name: `City of ${zone.city_name}`,
-  },
+  isPartOf: { '@type': 'WebSite', name: 'ZoningBase', url: 'https://zoningbase.com/' },
 } : null;
 
 const categories = [...usesByCategory.keys()];
@@ -124,7 +143,7 @@ const categories = [...usesByCategory.keys()];
           <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
                 integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
                 crossorigin="" />
-          <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          <script is:inline defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
                   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
                   crossorigin=""></script>
         </>
@@ -162,9 +181,9 @@ const categories = [...usesByCategory.keys()];
         </div>
 
         <!-- Quick Stats Bar -->
-        {standards.length > 0 && (
+        {statTiles.length > 0 && (
           <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {standards.slice(0, 4).map((std) => (
+            {statTiles.map((std) => (
               <div class="bg-surface rounded-lg border border-border p-4 text-center">
                 <p class="text-2xl font-bold text-brand-700">{std.value}</p>
                 <p class="text-xs text-text-muted mt-1 uppercase tracking-wider">{std.label}</p>
@@ -172,6 +191,10 @@ const categories = [...usesByCategory.keys()];
             ))}
           </div>
         )}
+
+        <p class="mt-4 text-xs text-text-muted max-w-3xl">
+          Figures on this page are compiled from {zone.city_name}'s public zoning ordinance by an automated extraction process and have not been checked line by line against the adopted code. This page is for reference only and is not legal advice. Confirm any figure with the {zone.city_name} planning department before relying on it.
+        </p>
 
         <!-- Development Standards + Map Grid -->
         <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -191,7 +214,7 @@ const categories = [...usesByCategory.keys()];
                   {standards.map((std, i) => (
                     <tr class={i % 2 === 0 ? 'bg-surface' : 'bg-surface-alt'}>
                       <td class="px-5 py-3.5 text-sm text-text-secondary">{std.label}</td>
-                      <td class="px-5 py-3.5 text-sm font-semibold text-right tabular-nums">{std.value}</td>
+                      <td class={`px-5 py-3.5 text-sm text-right ${std.numeric ? 'font-semibold tabular-nums' : 'text-text-secondary'}`}>{std.value}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -379,6 +402,20 @@ const categories = [...usesByCategory.keys()];
         </div>
 
         <!-- Other zones in this city -->
+        {siblings && siblings.results.length > 0 && (
+          <div class="mt-8">
+            <h2 class="font-semibold text-lg">Other zoning districts in {zone.city_name}</h2>
+            <ul class="mt-3 flex flex-wrap gap-2">
+              {siblings.results.map((sz) => (
+                <li>
+                  <a href={`/${zone.state_slug}/${zone.county_slug}/${zone.city_slug}/zoning/${sz.zone_code_slug}/`}
+                     class="inline-flex items-center px-3 py-1.5 rounded-md border border-border bg-surface hover:border-brand-400 text-sm text-brand-700"
+                     title={sz.zone_name}>{sz.zone_code}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div class="mt-8 text-center pb-4">
           <a href={`/${zone.state_slug}/${zone.county_slug}/${zone.city_slug}/`}
              class="text-sm text-brand-600 hover:text-brand-700 font-medium">
