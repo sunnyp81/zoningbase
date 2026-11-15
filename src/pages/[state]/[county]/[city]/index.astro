@@ -106,14 +106,14 @@ const description = city
                 <p class="mt-2 text-sm text-text-secondary line-clamp-2">{zone.description}</p>
               )}
               <div class="mt-3 flex flex-wrap gap-4 text-xs text-text-muted">
-                {zone.max_height_ft != null && (
+                {typeof zone.max_height_ft === 'number' && (
                   <span>Height: {zone.max_height_ft} ft</span>
                 )}
-                {zone.far != null && (
+                {typeof zone.far === 'number' && (
                   <span>FAR: {zone.far}</span>
                 )}
-                {zone.min_lot_size_sqft != null && (
-                  <span>Min Lot: {zone.min_lot_size_sqft.toLocaleString()} sqft</span>
+                {typeof zone.min_lot_size_sqft === 'number' && (
+                  <span>Min Lot: {zone.min_lot_size_sqft.toLocaleString('en-US')} sqft</span>
                 )}
                 {useCountMap.get(zone.id) && (
                   <span>{useCountMap.get(zone.id)} permitted uses</span>
